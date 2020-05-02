@@ -4,12 +4,24 @@ class PostsController < ApplicationController
     # GET /posts
     def index
       @posts = Post.all
-      render json: PostSerializer.new(@posts)
+      
+      # "to_json(:include => :user)" will include the object data from the relationship 
+      # when it is creating the JSON for your object.
+      # render json: @posts.to_json(:include => :user)
+      render json: @posts.to_json(:include => {
+        :user => {
+          :only => [:name]
+        }
+      })
     end
   
     # GET /posts/1
     def show
-      render json: PostSerializer.new(@post)
+      render json: @post.to_json(:include => {
+        :user => {
+          :only => [:name]
+        }
+      })
     end
   
     # POST /posts
@@ -17,7 +29,11 @@ class PostsController < ApplicationController
       @post = Post.find_or_create_by(post_params)
   
       if @post.save
-        render json: PostSerializer.new(@post), status: :created, location: @post
+        render json: @post.to_json(:include => {
+          :user => {
+            :only => [:name]
+          }
+        }), status: :created, location: @post
       else
         render json: @post.errors, status: :unprocessable_entity
       end
@@ -26,7 +42,11 @@ class PostsController < ApplicationController
     # PATCH/PUT /posts/1
     def update
       if @post.update(post_params)
-        render json: PostSerializer.new(@post)
+        render json: @post.to_json(:include => {
+          :user => {
+            :only => [:name]
+          }
+        })
       else
         render json: @post.errors, status: :unprocessable_entity
       end
