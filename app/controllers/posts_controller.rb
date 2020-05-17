@@ -12,6 +12,9 @@ class PostsController < ApplicationController
         :user => {
           :only => [:name]
         }
+        #:like => {
+        #  :only => [:likes]
+        #}
       })
     end
   
@@ -21,19 +24,19 @@ class PostsController < ApplicationController
         :user => {
           :only => [:name]
         }
+        #:like => {
+        #  :only => [:likes]
+        #}
       })
     end
   
     # POST /posts
     def create
+      #binding.pry
       @post = Post.find_or_create_by(post_params)
   
       if @post.save
-        render json: @post.to_json(:include => {
-          :user => {
-            :only => [:name]
-          }
-        }), status: :created, location: @post
+        render json: @post, status: :created, location: @post
       else
         render json: @post.errors, status: :unprocessable_entity
       end
@@ -42,11 +45,7 @@ class PostsController < ApplicationController
     # PATCH/PUT /posts/1
     def update
       if @post.update(post_params)
-        render json: @post.to_json(:include => {
-          :user => {
-            :only => [:name]
-          }
-        })
+        render json: @post
       else
         render json: @post.errors, status: :unprocessable_entity
       end
