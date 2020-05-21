@@ -18,7 +18,7 @@ gem 'puma', '~> 4.1'
 
 # FAST JSON
 # ==========
-gem 'fast_jsonapi'
+# gem 'fast_jsonapi'
 # ==========
 
 # Use Active Storage variant
@@ -48,3 +48,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # HTTP (The Gem! a.k.a. http.rb) is an easy-to-use client library for making requests from Ruby.
 gem 'http'
+
+# Active Model Serializer
+gem 'active_model_serializers'

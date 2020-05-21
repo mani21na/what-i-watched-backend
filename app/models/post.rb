@@ -1,8 +1,10 @@
 class Post < ApplicationRecord
     belongs_to :user
-    has_many :comments, :dependent => :delete_all
-    #has_many :likes, :dependent => :delete_all
-    has_one :like, :dependent => :delete
+    has_many :likes, :dependent => :delete_all
+    #has_many :comments, :dependent => :delete_all
+    #has_one :like, :dependent => :delete
 
-    #validates :pic_url, :user_id, presence: true
+    # *******************************************
+    accepts_nested_attributes_for :likes, :allow_destroy => true
+    # *******************************************
 end
